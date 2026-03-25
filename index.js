@@ -7,6 +7,7 @@
  */
 function canCastSpell(isSpellPrepared, hasScroll) {
   // TODO
+  return isSpellPrepared || hasScroll;
 }
 
 /**
@@ -18,6 +19,7 @@ function canCastSpell(isSpellPrepared, hasScroll) {
  */
 function isHidden(hiding, aware) {
   // TODO
+  return hiding || !aware;
 }
 
 /**
@@ -29,6 +31,7 @@ function isHidden(hiding, aware) {
  */
 function doesStrikeHit(attack, ac) {
   // TODO
+  return attack >= ac;
 }
 
 /**
@@ -40,6 +43,7 @@ function doesStrikeHit(attack, ac) {
  */
 function doesStrikeCrit(attack, ac) {
   // TODO
+  return attack >= (ac + 10);
 }
 
 /**
@@ -52,6 +56,11 @@ function doesStrikeCrit(attack, ac) {
  */
 function heal(maxHp, currentHp, healAmount) {
   // TODO
+  if(currentHp + healAmount > maxHp) {
+    return maxHp;
+  } else {
+    return currentHp + healAmount;
+  }
 }
 
 /**
@@ -72,6 +81,15 @@ function heal(maxHp, currentHp, healAmount) {
  */
 function getProficiencyBonus(level, rank) {
   // TODO
+  if(rank === "untrained") {return 0}
+
+  if(rank === "trained") {return level + 2}
+
+  if(rank === "expert") {return level + 4}
+
+  if(rank === "master") {return level + 6}
+
+  if(rank === "legendary") {return level + 8}
 }
 
 /**
@@ -86,6 +104,11 @@ function getProficiencyBonus(level, rank) {
  */
 function getCoverBonus(behindObstacle, takingCover) {
   // TODO
+  if(!behindObstacle) {return 0}
+
+  if(behindObstacle && takingCover) {return 4}
+
+  if(behindObstacle) {return 2}
 }
 
 /**
@@ -102,6 +125,11 @@ function getCoverBonus(behindObstacle, takingCover) {
  */
 function getRemainingHp(maxHp, currentHp, damage) {
   // TODO
+  if(damage >= (maxHp * 2)) {return -1}
+
+  if(currentHp - damage <= 0) {return 0}
+
+  return currentHp - damage;
 }
 
 /**
@@ -114,6 +142,13 @@ function getRemainingHp(maxHp, currentHp, damage) {
  */
 function canSee(light, vision) {
   // TODO
+  if(light === "bright") {return true}
+
+  if(vision === "dark") {return true}
+
+  if(light === "dim" && vision === "low-light") {return true}
+
+  return false;
 }
 
 /**
@@ -128,4 +163,9 @@ function canSee(light, vision) {
  */
 function getStrikeDamage(attack, ac, damage) {
   // TODO
+  if(!doesStrikeHit(attack, ac)) {return 0}
+
+  if(doesStrikeHit(attack, ac) && doesStrikeCrit(attack, ac)) {return damage * 2}
+
+  return damage;
 }
